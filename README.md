@@ -1,135 +1,90 @@
-# Sainath Jadhav — Professional Developer Portfolio & Freelance Website
+# 🚗 Patil Dealers, Nanded – Production Used Car Showroom System
 
-A high-performance, dark-themed personal portfolio and freelance business website designed for **Sainath Jadhav** (Java Backend Developer | Spring Boot & Microservices | AI Integration).
-
-Built using **React**, **TypeScript**, **Tailwind CSS**, and **Vite**, engineered for high lighthouse scores, conversion-focused credibility, and frictionless public deployment to **Vercel** or **Render**.
+A modern, mobile-first, zero-running-cost web platform built for **Patil Dealers**, a leading pre-owned car showroom located in **Nanded, Maharashtra**.
 
 ---
 
-## 🛠️ Tech Stack
+## 🌟 Key Features
 
-- **Framework**: React 19 + TypeScript (strict typing)
-- **Styling**: Tailwind CSS v4 + Custom Design Tokens (Subtle glassmorphism, technical dark grid motif)
-- **Icons**: Lucide React + Clean Branded SVGs (GitHub, LinkedIn)
-- **Animations**: Framer Motion & CSS hardware-accelerated transitions
-- **Deployment**: Vercel ready (`vercel.json` included with clean URLs and security headers)
-- **Code Quality**: Oxlint & TypeScript compilation (`tsc -b`) passing with 0 errors/warnings
+### 1. Public Showroom & Inventory
+- **Dynamic Hero Section**: Real-time sales metrics, inspection promises, and animated showcases.
+- **Advanced Inventory Search & Filter**: Filter cars by budget slider, brand (Maruti, Hyundai, Tata, Mahindra, etc.), fuel type (Petrol, Diesel, CNG), transmission, and model year.
+- **Car Detail Page**: Multi-angle image gallery, 150-point inspection badge, technical specifications, loan EMI calculator, test drive booking form, and click-to-chat WhatsApp button.
+- **Sell Your Car Page**: Free online car valuation submission form with instant callback.
+- **Local SEO & Google Business Ready**: Schema.org `AutoDealer` structured data, geotags for Nanded, Open Graph tags.
+
+### 2. Login Gate & Customer Acquisition
+- Seamlessly allows browsing of home and inventory listings.
+- Unlocking complete car inspection papers, test drives, or inquiries prompts an OTP login gate (mobile/email).
+- Stores registered customer details with zero friction and welcome notification dispatch.
+
+### 3. Dealership Owner Admin Portal (`/admin`)
+- **Executive Dashboard**: Real-time units in stock, monthly sales, realized revenue, and calculated net profit.
+- **Inventory Wizard**: 3-step car onboarding wizard with specifications, features, image links, and status toggles.
+- **Purchase Records**: Full inward register recording seller details, purchase price, refurbishment expenses, and RTO paperwork status.
+- **Sales & Profit Register**: Buyer details, automated profit calculation (`Sale Price - (Purchase + Refurbishment)`), and RTO transfer tracking.
+- **Document Vault**: Private Supabase storage bucket interface for RC smart cards, insurance policies, and Form 29/30 transfer deeds.
+- **Data Export**: One-click **Excel / CSV export** on every table.
+
+### 4. Zero-Cost Tech Stack
+- **Frontend**: React 19, Vite, Tailwind CSS, React Router v7, Framer Motion, Lucide Icons, SheetJS (`xlsx`).
+- **Backend**: Supabase (PostgreSQL with RLS, Auth, Storage).
+- **Notifications**: Resend (Welcome Email) + MSG91 (DLT SMS toggle via Edge Function).
+- **Deployment**: Vercel (zero-cost hobby tier).
+- **Future AI Voice Agent**: Webhook endpoints ready for greeting calls and visitor query resolution (Gemini Live / MSG91 Voice / Exotel).
 
 ---
 
-## 🚀 Getting Started Locally
+## 🚀 Setup & Local Development
 
-### Prerequisites
-- Node.js (v18.0.0 or later, tested with Node v24)
-- npm or yarn
-
-### Installation
+### 1. Install Dependencies
 ```bash
-# Clone the repository
-git clone https://github.com/Saijdhav45/Portfolio.git
-cd Portfolio
-
-# Install dependencies
 npm install
+```
 
-# Start local development server
+### 2. Set Up Environment Variables
+Copy `.env.example` to `.env`:
+```bash
+cp .env.example .env
+```
+Update with your Supabase credentials.
+
+### 3. Run Development Server
+```bash
 npm run dev
 ```
 
-The application will be live at `http://localhost:5173/`.
-
-### Linting & Production Build
+### 4. Build for Production
 ```bash
-# Run linter
-npm run lint
-
-# Compile TypeScript and bundle for production
 npm run build
-
-# Preview production build locally
-npm run preview
 ```
 
 ---
 
-## ⚙️ Configuration: Centralized Data File
+## 🗄️ Supabase Database Setup
 
-All portfolio content, project case studies, skill categories, and social links are centralized in a single typed configuration file:
-📍 [`src/data/portfolioData.ts`](./src/data/portfolioData.ts)
-
-### Personal Details & Placeholders Checklist
-Search for `[CONFIGURABLE` inside `src/data/portfolioData.ts` to update:
-1. **Email Address**: Set `personal.email` to your active inquiry email.
-2. **LinkedIn Profile**: Set `personal.linkedin` to your official LinkedIn URL.
-3. **Resume File**: Place your PDF resume in [`public/resume.pdf`](./public/) or configure `personal.resumeUrl`.
-4. **Availability Status**: Set `personal.isAvailableForFreelance` (`true` or `false`) to control the live availability badge in the Hero section.
-5. **Project Repositories**: Update `githubUrl` under each project in `projects[]` when repos are published or made public.
+1. Create a free project at [supabase.com](https://supabase.com).
+2. Go to **SQL Editor** in Supabase and run the migration script:
+   - `supabase/migrations/20261103_init_schema.sql`
+3. In **Storage**, create:
+   - `car-media` (Public bucket)
+   - `dealership-documents` (Private bucket, accessible via signed URLs)
+4. Deploy the Supabase Edge Functions:
+   - `supabase/functions/send-welcome-notifications`
+   - `supabase/functions/voice-agent-webhook`
 
 ---
 
-## 🚢 Deploying to Vercel (Recommended)
+## 🌐 Deploy to Vercel (Zero Cost)
 
-### Step 1: Push Code to GitHub
-1. Create a new repository on [GitHub](https://github.com/new) named `Portfolio` (or `sainath-portfolio`).
-2. Run the following commands in your project folder:
+1. Push your repository to GitHub:
    ```bash
-   git branch -M main
-   git remote add origin https://github.com/Saijdhav45/Portfolio.git
-   git push -u origin main
+   git add .
+   git commit -m "feat: Patil Dealers Nanded production release"
+   git push origin main
    ```
-
-### Step 2: Import into Vercel
-1. Log in to [Vercel](https://vercel.com).
-2. Click **Add New...** > **Project**.
-3. Connect your GitHub account and select your `Portfolio` repository.
-4. Vercel will automatically detect **Vite**:
-   - **Framework Preset**: Vite
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-   - **Install Command**: `npm install`
-5. Click **Deploy**. Your site will be live within ~45 seconds with global CDN and automated SSL!
-
-### Step 3: Custom Domain (Optional)
-In your Vercel Project Dashboard:
-- Go to **Settings** > **Domains**.
-- Enter your domain (e.g., `sainathjadhav.dev`).
-- Add the CNAME / A records provided by Vercel to your DNS provider.
-
----
-
-## 📁 Project Architecture
-
-```
-Portfolio/
-├── public/
-│   ├── favicon.svg       # Custom developer SVG mark
-│   ├── robots.txt        # Search engine crawl directives
-│   └── sitemap.xml       # Search engine indexing
-├── src/
-│   ├── components/
-│   │   ├── Navbar.tsx      # Sticky header with mobile drawer & theme toggle
-│   │   ├── Footer.tsx      # Clean closing bar with copyright & socials
-│   │   └── SocialIcons.tsx # High-contrast SVG icons for GitHub & LinkedIn
-│   ├── data/
-│   │   └── portfolioData.ts # Centralized source of truth
-│   ├── sections/
-│   │   ├── Hero.tsx        # High-impact introduction & code architecture card
-│   │   ├── About.tsx       # Philosophy, backend credibility, value props
-│   │   ├── Skills.tsx      # Interactive categorized capability matrix
-│   │   ├── Projects.tsx    # Case studies with expandable architecture blueprints
-│   │   ├── Services.tsx    # 5 Freelance service offerings & deliverables
-│   │   ├── Workflow.tsx    # 4-stage transparent development process
-│   │   └── Contact.tsx     # Validated form + 1-click email copy & mailto fallback
-│   ├── App.tsx             # Root component with theme state
-│   ├── index.css           # Tailwind CSS imports & custom grid patterns
-│   └── main.tsx            # React root mount
-├── vercel.json             # Vercel SPA routing and security headers
-├── .env.example            # Environment configuration template
-└── vite.config.ts          # Vite configuration with Tailwind CSS plugin
-```
-
----
-
-## 🔒 Security & Privacy Notice
-- No API keys or private credentials are embedded in this client codebase.
-- The contact form utilizes client-side validation and genuine `mailto:` client drafts, preventing missing webhook failures or leaked backend endpoints.
+2. Import the repository in [vercel.com](https://vercel.com).
+3. Under **Environment Variables**, add:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+4. Click **Deploy**. Vercel will build the Vite project using `vercel.json` rewrites.

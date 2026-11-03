@@ -1,57 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { Navbar } from './components/Navbar';
-import { Hero } from './sections/Hero';
-import { About } from './sections/About';
-import { Skills } from './sections/Skills';
-import { Projects } from './sections/Projects';
-import { Services } from './sections/Services';
-import { Workflow } from './sections/Workflow';
-import { Contact } from './sections/Contact';
-import { Footer } from './components/Footer';
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { Navbar } from "./components/common/Navbar";
+import { Footer } from "./components/common/Footer";
+import { LoginGateModal } from "./components/common/LoginGateModal";
 
-export const App: React.FC = () => {
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('portfolio_theme') as 'dark' | 'light' | null;
-      if (savedTheme) return savedTheme;
-    }
-    return 'dark';
-  });
+// Public Pages
+import { HomePage } from "./pages/HomePage";
+import { InventoryPage } from "./pages/InventoryPage";
+import { CarDetailPage } from "./pages/CarDetailPage";
+import { SellCarPage } from "./pages/SellCarPage";
+import { AboutPage } from "./pages/AboutPage";
+import { ContactPage } from "./pages/ContactPage";
 
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-  }, [theme]);
+// Admin Pages
+import { AdminDashboard } from "./pages/admin/AdminDashboard";
+import { AdminCarsPage } from "./pages/admin/AdminCarsPage";
+import { AdminPurchasesPage } from "./pages/admin/AdminPurchasesPage";
+import { AdminSalesPage } from "./pages/admin/AdminSalesPage";
+import { AdminEnquiriesPage } from "./pages/admin/AdminEnquiriesPage";
+import { AdminValuationsPage } from "./pages/admin/AdminValuationsPage";
+import { AdminDocumentsPage } from "./pages/admin/AdminDocumentsPage";
 
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    localStorage.setItem('portfolio_theme', nextTheme);
-    document.documentElement.classList.toggle('dark', nextTheme === 'dark');
-  };
-
+export default function App() {
   return (
-    <div className="min-h-screen bg-[#080c14] text-slate-100 flex flex-col font-sans selection:bg-blue-500/30 selection:text-white">
-      {/* Background technical grid pattern */}
-      <div className="fixed inset-0 bg-grid-pattern opacity-40 pointer-events-none -z-20" />
-      
-      {/* Top sticky navigation */}
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
+    <AuthProvider>
+      <BrowserRouter>
+        <div className="flex flex-col min-h-screen bg-slate-950 font-sans selection:bg-rose-500 selection:text-white">
+          <Navbar />
+          <div className="flex-1">
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/inventory" element={<InventoryPage />} />
+              <Route path="/cars/:id" element={<CarDetailPage />} />
+              <Route path="/sell" element={<SellCarPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
 
-      {/* Main Content Sections */}
-      <main className="flex-1">
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Services />
-        <Workflow />
-        <Contact />
-      </main>
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/cars" element={<AdminCarsPage />} />
+              <Route path="/admin/purchases" element={<AdminPurchasesPage />} />
+              <Route path="/admin/sales" element={<AdminSalesPage />} />
+              <Route path="/admin/enquiries" element={<AdminEnquiriesPage />} />
+              <Route path="/admin/valuations" element={<AdminValuationsPage />} />
+              <Route path="/admin/documents" element={<AdminDocumentsPage />} />
 
-      {/* Site Footer */}
-      <Footer />
-    </div>
+              {/* Catch-all redirect */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </div>
+          <Footer />
+
+          {/* Global Interactive Login Gate Modal */}
+          <LoginGateModal />
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
   );
-};
-
-export default App;
+}
